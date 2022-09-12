@@ -3,6 +3,7 @@ package com.exams.microservices.appexammicroserviceexams.controllers;
 import com.exams.microservices.appexamlibcommonexams.models.entities.Exam;
 import com.exams.microservices.appexammicroserviceexams.services.ExamService;
 import com.exams.microservices.libcommonmicroservices.controllers.GenericController;
+import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,7 +24,8 @@ public class ExamController extends GenericController<ExamService, Exam> {
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<?> edit(@Valid @RequestBody Exam exam, BindingResult result, @PathVariable Long id) {
+  public ResponseEntity<?> edit(@Valid @RequestBody Exam exam, BindingResult result,
+      @PathVariable Long id) {
 
     if (result.hasErrors()) {
       return this.validate(result);
@@ -52,6 +55,12 @@ public class ExamController extends GenericController<ExamService, Exam> {
   @GetMapping("/subjects")
   public ResponseEntity<?> findAllSubjects() {
     return ResponseEntity.ok(this.service.findAllSubjects());
+  }
+
+  @GetMapping("/answered-by-questions")
+  public ResponseEntity<?> findExamIdsWithAnswersByQuestionIds(
+      @RequestParam List<Long> questionIds) {
+    return ResponseEntity.ok(this.service.findExamIdsWithAnswersByQuestionIds(questionIds));
   }
 }
 

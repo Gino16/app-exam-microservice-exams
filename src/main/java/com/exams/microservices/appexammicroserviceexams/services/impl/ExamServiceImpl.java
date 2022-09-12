@@ -34,4 +34,10 @@ public class ExamServiceImpl extends GenericServiceImpl<Exam, ExamRepository> im
   public Iterable<Subject> findAllSubjects() {
     return subjectRepository.findAll();
   }
+
+  @Override
+  @Transactional(readOnly = true)
+  public Iterable<Long> findExamIdsWithAnswersByQuestionIds(Iterable<Long> questionIds) {
+    return repository.findExamIdsWithAnswersByQuestionIds(questionIds);
+  }
 }

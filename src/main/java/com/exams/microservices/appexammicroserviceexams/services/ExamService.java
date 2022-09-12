@@ -9,4 +9,7 @@ public interface ExamService extends GenericService<Exam> {
   public List<Exam> findByName(String name);
 
   public Iterable<Subject> findAllSubjects();
+
+
+  public Iterable<Long> findExamIdsWithAnswersByQuestionIds(Iterable<Long> questionIds);
 }
